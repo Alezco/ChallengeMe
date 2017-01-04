@@ -3,7 +3,6 @@ package benjamin.com.challengeme;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -11,22 +10,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import benjamin.com.challengeme.Connection.RequestManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener
 {
-    private Button myBtn;
+    TextView temp_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,12 +27,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        myBtn = (Button) findViewById(R.id.button);
-        myBtn.setOnClickListener(this);
         setSupportActionBar(toolbar);
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
+        temp_text = (TextView) findViewById(R.id.temp_text);
+        temp_text.setText(RequestManager.getInstance().getChallenges());
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
@@ -73,92 +67,23 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
     {
         int id = item.getItemId();
 
         if (id == R.id.nav_manage)
-        {
             Toast.makeText(MainActivity.this, "nav_manage", Toast.LENGTH_SHORT).show();
-        }
         else if (id == R.id.nav_send)
-        {
             Toast.makeText(MainActivity.this, "nav_send", Toast.LENGTH_SHORT).show();
-        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public String get(String url) throws IOException
-    {
-        InputStream is = null;
-        try
-        {
-            final HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-            conn.setReadTimeout(10000);
-            conn.setConnectTimeout(15000);
-            conn.setRequestMethod("GET");
-            conn.setDoInput(true);
-            conn.connect();
-            is = conn.getInputStream();
-            return readIt(is);
-        }
-        finally
-        {
-            try
-            {
-                if (is != null)
-                    is.close();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private String readIt(InputStream is) throws IOException
-    {
-        BufferedReader r = new BufferedReader(new InputStreamReader(is));
-        StringBuilder response = new StringBuilder();
-        String line;
-        while ((line = r.readLine()) != null)
-            response.append(line).append('\n');
-        return response.toString();
-    }
-
     @Override
     public void onClick(View v)
     {
-        if (v == myBtn)
-        {
-            try
-            {
-                Log.d("===============", "before get URL");
-                Log.d(">>>>>>>>>>>>>>>>", get("http://challengeme.fr/get_challenges.php"));
-                Log.d("===============", "end get URL with success");
-            }
-            catch (IOException e)
-            {
-                Log.d("================", "error catched while getting URL");
-                e.printStackTrace();
-            }
-        }
+
     }
 }
