@@ -1,8 +1,8 @@
 package benjamin.com.challengeme;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener
 {
     private Button myBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -36,22 +38,24 @@ public class MainActivity extends AppCompatActivity
         myBtn.setOnClickListener(this);
         setSupportActionBar(toolbar);
 
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Click !", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -63,18 +67,14 @@ public class MainActivity extends AppCompatActivity
     {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START))
-        {
             drawer.closeDrawer(GravityCompat.START);
-        } else
-        {
+        else
             super.onBackPressed();
-        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -82,45 +82,38 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings)
-        {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item)
+    public boolean onNavigationItemSelected(@NonNull MenuItem item)
     {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_camera)
         {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery)
+            Toast.makeText(MainActivity.this, "nav_camera", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.nav_gallery)
         {
-
-        } else if (id == R.id.nav_slideshow)
+            Toast.makeText(MainActivity.this, "nav_gallery", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.nav_slideshow)
         {
-
-        } else if (id == R.id.nav_manage)
+            Toast.makeText(MainActivity.this, "nav_slideshow", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.nav_manage)
         {
-
-        } else if (id == R.id.nav_share)
+            Toast.makeText(MainActivity.this, "nav_manage", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.nav_share)
         {
-
-        } else if (id == R.id.nav_send)
+            Toast.makeText(MainActivity.this, "nav_share", Toast.LENGTH_SHORT).show();
+        }
+        else if (id == R.id.nav_send)
         {
-
+            Toast.makeText(MainActivity.this, "nav_send", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -128,48 +121,58 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public String get(String url) throws IOException {
+    public String get(String url) throws IOException
+    {
         InputStream is = null;
-        try {
+        try
+        {
             final HttpURLConnection conn = (HttpURLConnection) new URL(url).openConnection();
-            conn.setReadTimeout(10000 /* milliseconds */);
-            conn.setConnectTimeout(15000 /* milliseconds */);
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
-            // Starts the query
             conn.connect();
             is = conn.getInputStream();
-            // Read the InputStream and save it in a string
             return readIt(is);
-        } finally {
-            // Makes sure that the InputStream is closed after the app is
-            // finished using it.
-            if (is != null) {
-                is.close();
+        }
+        finally
+        {
+            try
+            {
+                if (is != null)
+                    is.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
             }
         }
     }
 
-    private String readIt(InputStream is) throws IOException {
+    private String readIt(InputStream is) throws IOException
+    {
         BufferedReader r = new BufferedReader(new InputStreamReader(is));
         StringBuilder response = new StringBuilder();
         String line;
-        while ((line = r.readLine()) != null) {
+        while ((line = r.readLine()) != null)
             response.append(line).append('\n');
-        }
         return response.toString();
     }
 
     @Override
-    public void onClick(View v) {
-        if(v == myBtn)
+    public void onClick(View v)
+    {
+        if (v == myBtn)
         {
-            try {
-                Log.d("myTag", "before get URL / button clicked");
-                get("http://challengeme.fr/get_challenges.php");
-                Log.d("myTag2", "end get URL with success");
-            } catch (IOException e) {
-                Log.e("myErrTag", "error catched while getting URL");
+            try
+            {
+                Log.d("===============", "before get URL");
+                Log.d(">>>>>>>>>>>>>>>>", get("http://challengeme.fr/get_challenges.php"));
+                Log.d("===============", "end get URL with success");
+            }
+            catch (IOException e)
+            {
+                Log.d("================", "error catched while getting URL");
                 e.printStackTrace();
             }
         }
