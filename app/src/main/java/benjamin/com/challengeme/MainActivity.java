@@ -91,25 +91,9 @@ public class MainActivity extends AppCompatActivity
     {
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera)
-        {
-            Toast.makeText(MainActivity.this, "nav_camera", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_gallery)
-        {
-            Toast.makeText(MainActivity.this, "nav_gallery", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_slideshow)
-        {
-            Toast.makeText(MainActivity.this, "nav_slideshow", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_manage)
+        if (id == R.id.nav_manage)
         {
             Toast.makeText(MainActivity.this, "nav_manage", Toast.LENGTH_SHORT).show();
-        }
-        else if (id == R.id.nav_share)
-        {
-            Toast.makeText(MainActivity.this, "nav_share", Toast.LENGTH_SHORT).show();
         }
         else if (id == R.id.nav_send)
         {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Challenge Me</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="clickme">Clic !</string>
+    <string name="navigation_drawer_close">Fermer le volet de navigation</string>
+    <string name="navigation_drawer_open">Ouvrir le volet de navigation</string>
+    <string name="logo_description">Logo de Challenge Me</string>
+    <string name="mail">challengeme@gmail.com</string>
+    <string name="home">Accueil</string>
+    <string name="groups">Groupes</string>
+    <string name="players">Joueurs</string>
+    <string name="contact">Contact</string>
+    <string name="other">Autre</string>
+</resources>
