@@ -14,7 +14,6 @@
     tools:context="benjamin.com.challengeme.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-
     <TextView
         android:text="@string/loading"
         android:layout_width="wrap_content"
@@ -23,4 +22,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/temp_text"/>
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/login_button"
+        android:layout_below="@id/temp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp" />
+
 </RelativeLayout>

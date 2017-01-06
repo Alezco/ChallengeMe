@@ -1,4 +1,4 @@
-package benjamin.com.challengeme.Connection;
+package benjamin.com.challengeme.Connection.Database;
 
 import java.io.BufferedReader;
 import java.io.IOException;
