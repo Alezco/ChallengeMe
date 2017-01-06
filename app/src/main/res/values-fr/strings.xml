@@ -13,4 +13,5 @@
     <string name="contact">Contact</string>
     <string name="other">Autre</string>
     <string name="loading">Chargement…</string>
+    <string name="send_mail">Envoyer un email</string>
 </resources>

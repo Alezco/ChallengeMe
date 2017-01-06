@@ -1,27 +1,22 @@
 package benjamin.com.challengeme.Connection.Authentication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 
+import benjamin.com.challengeme.MainActivity;
 import benjamin.com.challengeme.R;
 
 public class LoginActivity extends AppCompatActivity
 {
-    CallbackManager callbackManager;
     Button loginButton;
+    Button button_temp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -33,37 +28,18 @@ public class LoginActivity extends AppCompatActivity
         AppEventsLogger.activateApp(this);
 
         loginButton = (Button) findViewById(R.id.login_button);
-    }
+        button_temp = (Button) findViewById(R.id.button_temp);
 
-    /*@Override
-    public View onCreateView(
-            LayoutInflater inflater,
-            ViewGroup container,
-            Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.splash, container, false);
-
-        loginButton = (LoginButton) view.findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email");
-        // If using in a fragment
-        loginButton.setFragment(this);
-        // Other app specific specialization
-
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        button_temp.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivityForResult(intent, 0);
             }
         });
-    }*/
+    }
+
+
 }

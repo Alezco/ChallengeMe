@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_manage)
             Toast.makeText(MainActivity.this, "nav_manage", Toast.LENGTH_SHORT).show();
         else if (id == R.id.nav_send)
-            Toast.makeText(MainActivity.this, "nav_send", Toast.LENGTH_SHORT).show();
+            sendMail();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -181,5 +181,14 @@ public class MainActivity extends AppCompatActivity
     public void onClick(View v)
     {
 
+    }
+
+    private void sendMail()
+    {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"challengeme@gmail.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Challenge Me ");
+        startActivity(Intent.createChooser(intent, getApplicationContext().getString(R.string.send_mail)));
     }
 }

@@ -13,4 +13,5 @@
     <string name="contact">Contact</string>
     <string name="other">Other</string>
     <string name="loading">Loading…</string>
+    <string name="send_mail">Send mail</string>
 </resources>
