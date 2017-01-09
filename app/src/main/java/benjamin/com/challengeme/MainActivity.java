@@ -14,22 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-
-import com.facebook.FacebookSdk;
 
 
+import benjamin.com.challengeme.Connection.Authentication.User;
 import benjamin.com.challengeme.Connection.Database.RequestManager;
 
 public class MainActivity extends AppCompatActivity
@@ -37,34 +24,28 @@ public class MainActivity extends AppCompatActivity
 {
     TextView temp_text;
 
-    CallbackManager callbackManager;
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(this);
-        callbackManager  = CallbackManager.Factory.create();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         temp_text = (TextView) findViewById(R.id.temp_text);
         temp_text.setText(RequestManager.getInstance().getChallenges());
+
+        Intent intent = getIntent();
+        User user = (User) intent.getExtras().get("User");
+        assert user != null;
+        temp_text.setText(temp_text.getText() + "\n" + user.getFirstName() + " " + user.getLastName() + "\n"
+                            + user.getEmail() + "\n"
+                            + user.getFbId() + "\n"
+                            + user.getPhotoURL() + "\n"
+                            + user.getCoverURL() + "\n");
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener()
@@ -85,71 +66,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-
-
-
-
-        final LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email");
-        //loginButton.setReadPermissions("read_mailbox");
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>()
-        {
-            @Override
-            public void onSuccess(LoginResult loginResult)
-            {
-                Log.d("===========Success", loginResult.toString());
-            }
-
-            @Override
-            public void onCancel()
-            {
-                Log.d("===========Cancel", "");
-            }
-
-            @Override
-            public void onError(FacebookException error)
-            {
-                Log.d("===========Error", error.toString());
-            }
-        });
-
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>()
-        {
-            @Override
-            public void onSuccess(LoginResult loginResult)
-            {
-                Log.d("===========Success", loginResult.toString());
-                new GraphRequest(
-                        loginResult.getAccessToken(),
-                        "/me?fields=conversations",
-                        null,
-                        HttpMethod.GET,
-                        new GraphRequest.Callback() {
-                            public void onCompleted(GraphResponse response) {
-                                Log.d("===========", response.toString());
-                            }
-                        }
-                ).executeAsync();
-            }
-
-            @Override
-            public void onCancel()
-            {
-                Log.d("===========Cancel", "");
-            }
-
-            @Override
-            public void onError(FacebookException error)
-            {
-                Log.d("===========Error", error.toString());
-            }
-        });
-
-
-
-
     }
 
     @Override
@@ -168,7 +84,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_manage)
-            Toast.makeText(MainActivity.this, "nav_manage", Toast.LENGTH_SHORT).show();
+            Log.d("===========", "Settings");
         else if (id == R.id.nav_send)
             sendMail();
 
