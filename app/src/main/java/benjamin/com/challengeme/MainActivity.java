@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-
 import benjamin.com.challengeme.Connection.Authentication.User;
 import benjamin.com.challengeme.Connection.Database.RequestManager;
 
@@ -23,6 +22,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener
 {
     TextView temp_text;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,23 +40,6 @@ public class MainActivity extends AppCompatActivity
 
         Intent intent = getIntent();
         User user = (User) intent.getExtras().get("User");
-        assert user != null;
-        temp_text.setText(temp_text.getText() + "\n" + user.getFirstName() + " " + user.getLastName() + "\n"
-                            + user.getEmail() + "\n"
-                            + user.getFbId() + "\n"
-                            + user.getPhotoURL() + "\n"
-                            + user.getCoverURL() + "\n");
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Snackbar.make(view, "Click !", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -64,8 +47,10 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        setMenuItems(user);
     }
 
     @Override
@@ -106,5 +91,28 @@ public class MainActivity extends AppCompatActivity
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"challengeme@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Challenge Me ");
         startActivity(Intent.createChooser(intent, getApplicationContext().getString(R.string.send_mail)));
+    }
+
+    private void setMenuItems(User user)
+    {
+        View hView = navigationView.getHeaderView(0);
+        TextView name = (TextView) hView.findViewById(R.id.menu_name);
+        name.setText(user.getFirstName() + " " +  user.getLastName());
+        TextView email = (TextView) hView.findViewById(R.id.menu_email);
+        email.setText(user.getEmail());
+    }
+
+    private void handleFab()
+    {
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Snackbar.make(view, "Click !", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });*/
     }
 }
