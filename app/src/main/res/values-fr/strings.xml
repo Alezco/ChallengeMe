@@ -14,4 +14,5 @@
     <string name="other">Autre</string>
     <string name="loading">Chargement…</string>
     <string name="send_mail">Envoyer un email</string>
+    <string name="friendlist_description">Photo d\'utilisateur</string>
 </resources>

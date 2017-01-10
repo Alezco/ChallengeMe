@@ -19,8 +19,12 @@ import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import benjamin.com.challengeme.MainActivity;
 import benjamin.com.challengeme.R;
@@ -113,7 +117,14 @@ public class LoginActivity extends AppCompatActivity
                                     user.setLastName(res.get("last_name").toString());
                                     user.setPhotoURL(res.getJSONObject("picture").getJSONObject("data").get("url").toString());
                                     user.setCoverURL(res.getJSONObject("cover").get("source").toString());
-                                    user.setFriends(null);
+                                    JSONArray jsonArray = res.getJSONObject("friends").getJSONArray("data");
+                                    for (int i = 0; i < jsonArray.length(); i++)
+                                    {
+                                        List<User> tmp = new ArrayList<>();
+                                        tmp.add((User) jsonArray.get(i));
+                                        user.setFriends(tmp);
+                                    }
+                                    Log.d("========", res.toString());
                                 } catch (JSONException e)
                                 {
                                     e.printStackTrace();
@@ -129,7 +140,6 @@ public class LoginActivity extends AppCompatActivity
             public void onCancel()
             {
                 Toast.makeText(getApplicationContext(), "Retrieving data cancel", Toast.LENGTH_SHORT).show();
-
             }
 
             @Override

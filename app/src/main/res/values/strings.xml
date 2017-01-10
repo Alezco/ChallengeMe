@@ -14,4 +14,5 @@
     <string name="loading">Loading…</string>
     <string name="facebook_app_id" translatable="false">229492627497328</string>
     <string name="send_mail">Send mail</string>
+    <string name="friendlist_description">User Photo</string>
 </resources>

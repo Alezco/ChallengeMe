@@ -14,4 +14,6 @@
     <string name="other">Other</string>
     <string name="loading">Loading…</string>
     <string name="send_mail">Send mail</string>
+    <string name="facebook_app_id" translatable="false"></string>
+    <string name="friendlist_description">User Photo</string>
 </resources>
