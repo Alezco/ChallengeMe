@@ -10,12 +10,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView2"/>
 
-    <Button
-        android:text="@string/clickme"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/button_temp"/>
-
     <com.facebook.login.widget.LoginButton
         android:id="@+id/login_button"
         android:layout_width="wrap_content"

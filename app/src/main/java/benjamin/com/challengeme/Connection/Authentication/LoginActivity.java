@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.CallbackManager;
@@ -31,7 +29,6 @@ public class LoginActivity extends AppCompatActivity
 {
     LoginButton loginButton;
     CallbackManager callbackManager;
-    Button button_temp;
     User user;
 
     @Override
@@ -46,16 +43,6 @@ public class LoginActivity extends AppCompatActivity
         loginButton = (LoginButton) findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
         loginButton.setReadPermissions("user_friends");
-
-        button_temp = (Button) findViewById(R.id.button_temp);
-        button_temp.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-            goToMainActivity(null);
-            }
-        });
 
         handleLogin();
     }
