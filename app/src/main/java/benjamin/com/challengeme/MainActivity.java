@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -13,7 +15,10 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import benjamin.com.challengeme.Connection.Authentication.User;
 import benjamin.com.challengeme.Connection.Database.RequestManager;
@@ -95,16 +100,19 @@ public class MainActivity extends AppCompatActivity
 
     private void setMenuItems(User user)
     {
-        View hView = navigationView.getHeaderView(0);
-        TextView name = (TextView) hView.findViewById(R.id.menu_name);
+        View view = navigationView.getHeaderView(0);
+        TextView name = (TextView) view.findViewById(R.id.menu_name);
         name.setText(user.getFirstName() + " " +  user.getLastName());
-        TextView email = (TextView) hView.findViewById(R.id.menu_email);
+        TextView email = (TextView) view.findViewById(R.id.menu_email);
         email.setText(user.getEmail());
+        ImageView profilePhoto = (ImageView) view.findViewById(R.id.profile_photo);
+        Picasso.with(getApplicationContext()).load(user.getPhotoURL()).into(profilePhoto);
     }
 
     private void handleFab()
     {
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = null;
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -113,6 +121,6 @@ public class MainActivity extends AppCompatActivity
                 Snackbar.make(view, "Click !", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });*/
+        });
     }
 }

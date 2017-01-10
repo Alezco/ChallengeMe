@@ -109,7 +109,7 @@ public class LoginActivity extends AppCompatActivity
                 Toast.makeText(getApplicationContext(), "Success retrieving data", Toast.LENGTH_SHORT).show();
                 new GraphRequest(
                         loginResult.getAccessToken(),
-                        "me?fields=id,email,first_name,last_name,picture{url},friends,cover",
+                        "me?fields=id,email,first_name,last_name,picture.width(120).height(120){url},friends,cover",
                         null,
                         HttpMethod.GET,
                         new GraphRequest.Callback()
