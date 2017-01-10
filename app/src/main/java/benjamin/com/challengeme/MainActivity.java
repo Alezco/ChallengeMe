@@ -1,11 +1,10 @@
 package benjamin.com.challengeme;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -21,15 +20,15 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import benjamin.com.challengeme.Connection.Authentication.User;
-import benjamin.com.challengeme.Connection.Database.RequestManager;
+import benjamin.com.challengeme.MenuFragments.GroupsFragment;
+import benjamin.com.challengeme.MenuFragments.HomeFragment;
+import benjamin.com.challengeme.MenuFragments.PlayersFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener
 {
-    TextView temp_text;
     NavigationView navigationView;
 
     @Override
@@ -43,8 +42,7 @@ public class MainActivity extends AppCompatActivity
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        temp_text = (TextView) findViewById(R.id.temp_text);
-        temp_text.setText(RequestManager.getInstance().getChallenges());
+        goToFragment(new HomeFragment());
 
         Intent intent = getIntent();
         User user = (User) intent.getExtras().get("User");
@@ -75,21 +73,40 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item)
     {
         int id = item.getItemId();
-
-        if (id == R.id.nav_manage)
-            Log.d("===========", "Settings");
-        else if (id == R.id.nav_send)
-            sendMail();
-
+        switch (id)
+        {
+            case R.id.menu_home:
+                goToFragment(new HomeFragment());
+                break;
+            case R.id.menu_groups:
+                goToFragment(new GroupsFragment());
+                break;
+            case R.id.menu_players:
+                goToFragment(new PlayersFragment());
+                break;
+            case R.id.menu_settings:
+                goToSettings();
+                break;
+            case R.id.menu_send:
+                sendMail();
+                break;
+        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
     @Override
-    public void onClick(View v)
-    {
+    public void onClick(View v) { }
 
+    private void goToFragment(Fragment fragment)
+    {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
+    }
+
+    private void goToSettings()
+    {
+        Log.d("===========", "Settings");
     }
 
     private void sendMail()

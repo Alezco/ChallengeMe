@@ -3,15 +3,15 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/menu_home"
             android:icon="@drawable/menu_home"
             android:title="@string/home"/>
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/menu_groups"
             android:icon="@drawable/menu_group"
             android:title="@string/groups"/>
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/menu_players"
             android:icon="@drawable/menu_player"
             android:title="@string/players"/>
     </group>
@@ -19,11 +19,11 @@
     <item android:title="@string/other">
         <menu>
             <item
-                android:id="@+id/nav_manage"
+                android:id="@+id/menu_settings"
                 android:icon="@drawable/menu_settings"
                 android:title="@string/action_settings"/>
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/menu_send"
                 android:icon="@drawable/menu_send"
                 android:title="@string/contact"/>
         </menu>
