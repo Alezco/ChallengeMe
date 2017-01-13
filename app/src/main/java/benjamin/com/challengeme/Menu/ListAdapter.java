@@ -1,4 +1,4 @@
-package benjamin.com.challengeme.MenuFragments;
+package benjamin.com.challengeme.Menu;
 
 import android.app.Activity;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package benjamin.com.challengeme.MenuFragments;
+package benjamin.com.challengeme.Menu;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

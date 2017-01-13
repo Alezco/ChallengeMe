@@ -1,0 +1,11 @@
+<preference-headers
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <header android:icon="@drawable/menu_group"
+            android:title="Test preferences"
+            android:summary="Description">
+        <intent android:action="android.intent.action.VIEW"
+                android:data="http://www.challengeme.fr" />
+    </header>
+
+</preference-headers>

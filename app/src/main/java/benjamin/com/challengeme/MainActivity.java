@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,9 +21,10 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import benjamin.com.challengeme.Connection.Authentication.User;
-import benjamin.com.challengeme.MenuFragments.GroupsFragment;
-import benjamin.com.challengeme.MenuFragments.HomeFragment;
-import benjamin.com.challengeme.MenuFragments.PlayersFragment;
+import benjamin.com.challengeme.Menu.GroupsFragment;
+import benjamin.com.challengeme.Menu.HomeFragment;
+import benjamin.com.challengeme.Menu.PlayersFragment;
+import benjamin.com.challengeme.Menu.SettingsActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener
@@ -106,7 +106,8 @@ public class MainActivity extends AppCompatActivity
 
     private void goToSettings()
     {
-        Log.d("===========", "Settings");
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivityForResult(intent, 1);
     }
 
     private void sendMail()
